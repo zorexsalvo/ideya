@@ -7,7 +7,11 @@ permalink: /problem
   <br><br>
   <div v-if="problemListForm">
     <div class="collection">
-      <a v-for="problem in problems" :href="problem" class="collection-item" v-html="problem.title"></a>
+      <a v-for="problem in problems"
+        :href="concatenateParams('{{ site.baseurl }}/details', problem.problem_id)"
+        class="collection-item">
+      [[ problem.title ]]
+      </a>
     </div>
 
     <div class="row center" v-if="problemListForm">
@@ -47,46 +51,4 @@ permalink: /problem
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{{ site.baseurl }}/js/vue.js"></script>
-<script>
-  new Vue({
-    el: '#app',
-    data: {
-      problemListForm: true,
-      problemForm: {
-        title: '',
-        description: '',
-        created_by: ''
-      },
-      problems: []
-    },
-    methods: {
-      addNewIdea: function() {
-        this.problemListForm = false;
-      },
-      submitIdea: function() {
-        var vue = this;
-        console.log(this.problemForm.description);
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.post('http://localhost:8000/api/problems/', {
-            title: vue.problemForm.title,
-            description: vue.problemForm.description,
-            created_by: vue.problemForm.created_by
-        })
-        .then(function(response) {
-          vue.problemListForm = true;
-          vue.problems.push(response.data);
-        });
-      },
-    },
-    created: function() {
-      var vue = this;
-      var getProblems = axios({
-        method: 'get',
-        url: 'http://localhost:8000/api/problems/',
-      })
-      .then(function(response) {
-        vue.problems = response.data;
-      });
-    }
-  });
-</script>
+<script src="{{ site.baseurl }}/js/problem.js"></script>
