@@ -5,50 +5,20 @@ permalink: /problem
 ---
 <div id="app">
   <br><br>
-  <div v-if="problemListForm">
-    <div class="collection">
-      <a v-for="problem in problems"
-        :href="concatenateParams('{{ site.baseurl }}/details', problem.problem_id)"
-        class="collection-item">
-      [[ problem.title ]]
-      </a>
-    </div>
-
-    <div class="row center" v-if="problemListForm">
-      <div class="col s12">
-        <a class="waves-effect waves-light btn" @click="addNewIdea">Add New Idea</a>
-      </div>
-    </div>
+  <div v-if="state == 'list'">
+    {% include problem/list.html %}
   </div>
 
+  <div class="row" v-if="state == 'new'">
+    {% include problem/new.html %}
+  </div>
 
-  <div class="row" v-else>
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12 m8 offset-m2">
-          <input type="text" class="validate" v-model="problemForm.title">
-          <label>Title</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m8 offset-m2">
-          <textarea class="materialize-textarea" v-model="problemForm.description"></textarea>
-          <label>Description</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m8 offset-m2">
-          <input type="text" class="validate" v-model="problemForm.created_by">
-          <label>Contributor</label>
-        </div>
-      </div>
-    </form>
-    <div class="col s12 center">
-        <a class="waves-effect waves-light btn" @click="submitIdea">Submit</a>
-    </div>
+  <div class="row" v-if="state == 'details'">
+    {% include problem/details.html %}
   </div>
 </div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{{ site.baseurl }}/js/vue.js"></script>
-<script src="{{ site.baseurl }}/js/problem.js"></script>
+<script src="{{ site.baseurl }}/js/app.js"></script>
+

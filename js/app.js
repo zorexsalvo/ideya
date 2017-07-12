@@ -2,7 +2,7 @@ new Vue({
 el: '#app',
 delimiters: ['[[', ']]'],
 data: {
-  problemListForm: true,
+  state: 'list',
   problemForm: {
     title: '',
     description: '',
@@ -12,7 +12,7 @@ data: {
 },
 methods: {
   addNewIdea: function() {
-    this.problemListForm = false;
+    this.state = 'new';
     this.problemForm.title = '';
     this.problemForm.description = '';
     this.problemForm.created_by = '';
@@ -27,12 +27,27 @@ methods: {
         created_by: vue.problemForm.created_by
     })
     .then(function(response) {
-      vue.problemListForm = true;
+      vue.state = 'list';
       vue.problems.push(response.data);
     });
   },
-  concatenateParams: function(baseurl, identifier) {
-     return baseurl + "?q=" + identifier;
+  cancelSubmit: function() {
+    this.state = 'list';
+  },
+  getDetails: function(problem_id) {
+    this.state = 'details';
+    var vue = this;
+    var getProblems = axios({
+      method: 'get',
+      url: 'http://localhost:8000/api/problems/' + problem_id + '/',
+    })
+    .then(function(response) {
+      console.log(response.data);
+      details = response.data;
+      vue.problemForm.title = details.title;
+      vue.problemForm.description = details.description;
+      vue.problemForm.created_by = details.created_by;
+    });
   }
 },
 created: function() {
@@ -46,4 +61,3 @@ created: function() {
   });
 }
 });
-

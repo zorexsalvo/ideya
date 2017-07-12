@@ -1,0 +1,13 @@
+<div class="collection">
+  <a v-for="problem in problems"
+     @click="getDetails(problem.problem_id)"
+     class="collection-item">
+    [[ problem.title ]]
+  </a>
+</div>
+
+<div class="row center">
+  <div class="col s12">
+    <a class="waves-effect waves-light btn" @click="addNewIdea">Add New Idea</a>
+  </div>
+</div>
