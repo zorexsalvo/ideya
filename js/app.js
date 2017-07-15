@@ -21,7 +21,7 @@ methods: {
     var vue = this;
     console.log(this.problemForm.description);
     axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios.post('http://localhost:8000/api/problems/', {
+    axios.post('http://ideya-backend.zorexsalvo.xyz/api/problems/', {
         title: vue.problemForm.title,
         description: vue.problemForm.description,
         created_by: vue.problemForm.created_by
@@ -39,7 +39,7 @@ methods: {
     var vue = this;
     var getProblems = axios({
       method: 'get',
-      url: 'http://localhost:8000/api/problems/' + problem_id + '/',
+      url: 'http://ideya-backend.zorexsalvo.xyz/api/problems/' + problem_id + '/',
     })
     .then(function(response) {
       console.log(response.data);
@@ -54,7 +54,7 @@ created: function() {
   var vue = this;
   var getProblems = axios({
     method: 'get',
-    url: 'http://localhost:8000/api/problems/',
+    url: 'http://ideya-backend.zorexsalvo.xyz/api/problems/',
   })
   .then(function(response) {
     vue.problems = response.data;
